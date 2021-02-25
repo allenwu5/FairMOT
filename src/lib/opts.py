@@ -157,7 +157,8 @@ class opts(object):
                              help='category specific bounding box size.')
     self.parser.add_argument('--not_reg_offset', action='store_true',
                              help='not regress local offset.')
-
+    self.parser.add_argument('--frame_rate', type=float, default=29.8,
+                             help='fps for input images')
   def parse(self, args=''):
     if args == '':
       opt = self.parser.parse_args()

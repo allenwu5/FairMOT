@@ -22,7 +22,14 @@ def demo(opt):
     mkdir_if_missing(result_root)
 
     logger.info('Starting tracking...')
-    dataloader = datasets.LoadVideo(opt.input_video, opt.img_size)
+
+    assert osp.exists(opt.input_video), f'{opt.input_video} does NOT exist !'
+    file_name, file_ext = osp.splitext(opt.input_video)
+    if file_ext in ['.mp4', 'avi']:
+        dataloader = datasets.LoadVideo(opt.input_video, opt.img_size)
+    else:
+        dataloader = datasets.LoadImages(opt.input_video, opt.img_size)
+        dataloader.frame_rate = int(round(opt.frame_rate))
     result_filename = os.path.join(result_root, 'results.txt')
     frame_rate = dataloader.frame_rate
 
